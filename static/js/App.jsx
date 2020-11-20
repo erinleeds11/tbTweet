@@ -4,7 +4,8 @@ function Homepage() {
     return (
       <div >
         <div className="title">
-        <h1>#tbTweet</h1>
+        <h1>#tbTweet<span><img className="logo" src="https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c53e.png"></img></span></h1>
+        
         <h5>Go back in time and read your old tweets</h5>
         </div>
         <Queries/>
@@ -58,7 +59,7 @@ function Queries() {
             </div>
             <button onClick={setResults}>Show Tweets</button>
             
-            <Results showResults={showResults}/>
+            <Results numberResults = {numberResults} username = {twitUsername} showResults={showResults} minDate = {minDate} maxDate = {maxDate} keyword={keyword}/>
 
         </div>
 
@@ -67,10 +68,28 @@ function Queries() {
 }
 
 function Results(props) {
+    console.log(props.username)
+
     if (props.showResults) {
+
+        const twintInfo = {"username":props.username, "number_results": props.numberResults, "min_date":props.minDate, "max_date": props.maxDate, "keyword":props.keyword}
+
+        fetch('/api/get-tweets', {
+            method: 'POST', 
+            body: JSON.stringify(twintInfo),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          })
+        .then(response => response.json())
+            .then(data => {
+            if (data) {
+                console.log(data);                 
+        }})
+    
         return (
             <div>
-                results
+                {props.username}
             </div>
         )
 } else {

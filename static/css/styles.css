@@ -30,3 +30,7 @@ input, select, textarea{
 .queries {
     padding: 50px;
 }
+
+.logo {
+    height: 55px;
+}
